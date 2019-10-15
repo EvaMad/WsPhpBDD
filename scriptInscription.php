@@ -10,7 +10,24 @@ $requete->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
 $requete->bindValue(':motdepasse', $motDePasse, PDO::PARAM_STR);
 $requete->execute();
 
-echo $requete->fetch() ? 'Connexion réussie.' : 'Connexion échouée';
-// TODO : si l'utilisateur n'existe pas le créer avec une requête INSERT INTO
+if ($requete->fetch()){
+echo "Ce pseudo existe déjà !";
+} else {
 
-$requete->closeCursor();
+    $requete = $bdd->prepare("INSERT INTO utilisateurs (pseudo, motDePasse, statutAdmin) VALUES (:pseudo, :motDePasse, :statutAdmin)");
+
+
+        $statutAdmin=0;
+    
+        
+        $requete->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
+        $requete->bindValue(':motDePasse', $motDePasse, PDO::PARAM_STR);
+        $requete->bindValue(':statutAdmin', $statutAdmin, PDO::PARAM_STR);
+        
+        $requete->execute();
+        
+    
+    }
+    
+// TODO : si l'utilisateur n'existe pas le créer avec une requête INSERT INTO
+   // UNE BOUCLE POUR INFORMER L'UTLISATEU
