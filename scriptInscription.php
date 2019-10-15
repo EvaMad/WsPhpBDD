@@ -6,9 +6,12 @@ $motDePasse = $_POST['motDePasse'];
 
 // Requête préparée pour empêcher les injections SQL
 $requete = $bdd->prepare("SELECT pseudo FROM utilisateurs WHERE pseudo=:pseudo AND motDePasse=:motdepasse");
+
 $requete->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
 $requete->bindValue(':motdepasse', $motDePasse, PDO::PARAM_STR);
+
 $requete->execute();
+
 
 if ($requete->fetch()){
 echo "Ce pseudo existe déjà !";
